@@ -13,8 +13,8 @@ object Sayari {
     gbrDf.count = 2213
     ofacDf.count = 8839
     */
-    val gbrDf = spark.read.json("src/main/resources/gbr.jsonl")
-    val ofacDf = spark.read.json("src/main/resources/ofac.jsonl")
+    val gbrDf = spark.read.json("src/main/files/gbr.jsonl")
+    val ofacDf = spark.read.json("src/main/files/ofac.jsonl")
 
     gbrDf.printSchema()
     ofacDf.printSchema()
@@ -97,12 +97,12 @@ object Sayari {
     import org.apache.hadoop.fs._
     val sc = spark.sparkContext
     val fs = FileSystem.get(sc.hadoopConfiguration)
-    fs.delete(new Path("src/main/resources/output/"),true)
+    fs.delete(new Path("src/main/files/output/"),true)
 
     //Writing to csv and renaming
-    finalDf.coalesce(1).write.format("csv").option("header", "true").save("src/main/resources/output/")
-    val file = fs.globStatus(new Path("src/main/resources/output" + "/part*"))(0).getPath().getName()
-    fs.rename(new Path("src/main/resources/output" + "/" + file), new Path("src/main/resources/output/" + "final.csv"))
+    finalDf.coalesce(1).write.format("csv").option("header", "true").save("src/main/files/output/")
+    val file = fs.globStatus(new Path("src/main/files/output" + "/part*"))(0).getPath().getName()
+    fs.rename(new Path("src/main/files/output" + "/" + file), new Path("src/main/files/output/" + "final.csv"))
 
     val t1 = System.currentTimeMillis()
     println("Proccessing time for Sayri " +(t1 - t0) / 1000 +" in seconds")

@@ -8,10 +8,6 @@ object Sayari {
     val spark = SparkSession.builder().master("local").appName("Sayari").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
 
-    //-running on spark shell
-    //val gbrDf = spark.read.json("/datalake/optum/optuminsight/p_edh/ccs/prd/developer/fixlib/sveerare/p_jars/gbr.jsonl")
-    //val ofacDf = spark.read.json("/datalake/optum/optuminsight/p_edh/ccs/prd/developer/fixlib/sveerare/p_jars/ofac.jsonl")
-
     /*
     ****Ingesting into Dataframes***
     gbrDf.count = 2213
